@@ -40,9 +40,15 @@ public class UserController {
     }
 	
 	@PostMapping("/newuser")
+	//引数のuserFormに@Validatedアノテーションを追加することで、registerUser()メソッドが呼ばれる前に、
+	//springFrameworkの中でUserFormクラスのフォールドに付与されたアノテーションを元にバリデーションを実施してくれる。
 	public String registerUser(@Validated UserForm userForm, BindingResult bindingResult) {
+		//引数にBindingResultを追加することで、UserFormクラスのフィールドに対するバリデーションの結果を保持している
 		if (bindingResult.hasErrors()) {
 			return "newuser";
+			//引数で受け取ったBindingResultには様々なメソッドが用意されている
+			//その中のhasErrorsメソッドは、もし一つでもバリデーションエラーがあればtrueを返す
+			//trueの場合は、ユーザー登録処理を実行せず即座に登録画面に返す処理をしている
 		}
 		User user = new User();
 		user.setName(userForm.getName());
