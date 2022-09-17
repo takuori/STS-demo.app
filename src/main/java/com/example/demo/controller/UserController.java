@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.data.entity.User;
@@ -55,6 +57,13 @@ public class UserController {
 		user.setEmail(userForm.getEmail());
 		
 		userRepository.save(user);
+		return "redirect:/users";
+	}
+	
+	///users/{id}に対してHTTPメソッドのDELETEメソッドを受け付けるための設定
+	@DeleteMapping("/users/{id}")
+	public String deleteUser(@PathVariable Long id) {
+		userRepository.deleteById(id); //IDを指定してデータを削除するメソッド
 		return "redirect:/users";
 	}
 
